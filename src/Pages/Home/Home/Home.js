@@ -1,11 +1,10 @@
 import React from 'react';
-
 import { useQuery } from '@tanstack/react-query';
 import Banner from '../Banner/Banner';
-import Categories from '../Categories/Categories';
+import Category from "../Category/Category"
 
 const Home = () => {
-    const {data: categories = [], } = useQuery({
+    const { data: categories = [], } = useQuery({
         queryKey: ['categories'],
         queryFn: async () => {
             const res = await fetch('http://localhost:5000/categories');
@@ -16,9 +15,19 @@ const Home = () => {
     return (
         <div>
             <Banner></Banner>
-            {
-                categories.map(category => <p>Hello Bangladesh</p>)
-            }
+            <section className='mt-5'>
+                <h2 className="text-3xl text-center my-5 font-bold">Categories</h2>
+                <div className='grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-3 container mx-auto'>
+                    {
+                        categories.map(category => <Category
+                            key={category._id}
+                            category={category}
+                        ></Category>)
+                    }
+                </div>
+            </section>
+
+
         </div>
     );
 };
