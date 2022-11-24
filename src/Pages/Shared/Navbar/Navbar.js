@@ -8,12 +8,12 @@ const Navbar = () => {
 
     const [open, setOpen] = useState(false)
     return (
-        <nav x-data="{ isOpen: false }" className="relative bg-slate-100 shadow dark:bg-gray-800">
+        <nav x-data="{ isOpen: false }" className="relative bg-slate-50 shadow dark:bg-gray-800">
             <div className="container px-6 py-4 mx-auto">
                 <div className="lg:flex lg:items-center lg:justify-between">
                     <div className="flex items-center justify-between">
                         <div className="text-xl font-semibold text-gray-700">
-                            <Link to='/' className="text-2xl font-bold text-gray-800 transition-colors duration-300 transform dark:text-white lg:text-3xl hover:text-gray-700 dark:hover:text-gray-300" href="/">Seba Commerce</Link>
+                            <Link to='/' className="text-2xl font-bold text-gray-800 transition-colors duration-300 transform dark:text-white lg:text-3xl hover:text-gray-700 dark:hover:text-gray-300" href="/">Sales BD</Link>
                         </div>
 
                         <div onClick={() => setOpen(!open)} className="flex lg:hidden">
