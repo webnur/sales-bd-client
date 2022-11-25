@@ -2,13 +2,17 @@ import React, { useContext } from 'react';
 import { FaGithub, FaUserAlt, } from 'react-icons/fa';
 import { useForm } from "react-hook-form";
 import { HiMail, HiLockClosed } from "react-icons/hi";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Signup.css'
 import { AuthContext } from '../../contexts/AuthProvider';
+import toast from 'react-hot-toast';
 
 const SignUp = () => {
     const { createUser, updateUser, googleSignIn } = useContext(AuthContext)
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     const handleSignUp = (data) => {
         // console.log(data)
@@ -33,6 +37,8 @@ const SignUp = () => {
                             photoURL: imageData.data.display_url
                         }
                         updateUser(userInfo)
+                        toast.success('sign up successfully')
+                        navigate(from, {replace: true})
                     })
                     .catch(error => console.error(error))
             })
@@ -43,6 +49,7 @@ const SignUp = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user)
+                navigate(from, { replace: true })
             })
             .catch(error => console.error(error))
     }

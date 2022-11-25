@@ -48,12 +48,24 @@ const Navbar = () => {
 
                             <Link to='/products' className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Products</Link>
 
-                            <Link to='/login' className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Login
-                            </Link>
 
-                            <Link to='/signup' className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">SignUp</Link>
 
-                            <button onClick={handleSignOut} className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Log Out</button>
+
+
+                            {
+                                user?.uid ?
+                                    <>
+                                        <Link to='/dashboard' className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Dashboard</Link>
+
+                                        <button onClick={handleSignOut} className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Log Out</button>
+                                    </>
+                                    :
+                                    <>
+                                        <Link to='/login' className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Login
+                                        </Link>
+                                        <Link to='/signup' className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">SignUp</Link>
+                                    </>
+                            }
 
 
                         </div>
@@ -64,15 +76,14 @@ const Navbar = () => {
                             </button>
 
                             <button type="button" className="flex items-center focus:outline-none" aria-label="toggle profile dropdown">
-                                {/* will add im user photo */}
 
-                                {
-                                    user?.photoURL &&
-                                    <div title={user?.displayName} className="w-10 h-10 overflow-hidden border-2 border-gray-400 rounded-full">
-                                        <img src={user?.photoURL} className="object-cover w-full h-full" alt="avatar" />
-                                    </div>
-                                }
-
+                                <div title={user?.displayName} className="w-10 h-10 overflow-hidden border-2 border-gray-400 rounded-full">
+                                    {
+                                        user?.photoURL ? <img src={user?.photoURL} className="object-cover w-full h-full" alt="avatar" />
+                                            :
+                                            <img src={"https://i.pinimg.com/originals/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.png"} className="object-cover w-full h-full" alt="avatar" />
+                                    }
+                                </div>
                             </button>
                         </div>
                     </div>
