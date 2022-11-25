@@ -25,7 +25,11 @@ const CategoryPosts = () => {
 
            
             {
-                product &&  <BookingModal product={product}>
+                product &&  <BookingModal
+                 product={product}
+                 setProduct= {setProduct}
+                 >
+                
                 </BookingModal>
             }
 
