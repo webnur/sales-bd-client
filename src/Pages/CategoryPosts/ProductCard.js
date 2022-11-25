@@ -10,7 +10,7 @@ const ProductCard = ({ product, setProduct }) => {
             <div className="card-body">
                 <h2 className="card-title">{productName}</h2>
                 <p>Resale price: {price} BDT</p>
-                <p className='line-through text-red-400'>Original Price: {originalPrice}BDT</p>
+                <p className=''>Original Price: <span className='line-through text-red-400'>{originalPrice}BDT</span></p>
                 <p>Location: {location}</p>
                 <p>Condition: {condition}</p>
                 <p>Years of use: {years_of_use}</p>

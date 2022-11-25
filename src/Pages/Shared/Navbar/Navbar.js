@@ -8,9 +8,9 @@ const Navbar = () => {
     const { user, logOut } = useContext(AuthContext)
 
     const handleSignOut = () => {
-      logOut()
-        .then(() => { })
-        .catch(error => console.error(error))
+        logOut()
+            .then(() => { })
+            .catch(error => console.error(error))
     }
 
 
@@ -66,7 +66,13 @@ const Navbar = () => {
                             <button type="button" className="flex items-center focus:outline-none" aria-label="toggle profile dropdown">
                                 {/* will add im user photo */}
 
-                                <h3 className="mx-2 text-gray-700 dark:text-gray-200 lg:hidden">Khatab wedaa</h3>
+                                {
+                                    user?.photoURL &&
+                                    <div title={user?.displayName} className="w-10 h-10 overflow-hidden border-2 border-gray-400 rounded-full">
+                                        <img src={user?.photoURL} className="object-cover w-full h-full" alt="avatar" />
+                                    </div>
+                                }
+
                             </button>
                         </div>
                     </div>
