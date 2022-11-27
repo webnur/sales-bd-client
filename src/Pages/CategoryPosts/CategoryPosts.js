@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import toast from 'react-hot-toast';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthProvider';
 import BookingModal from './BookingModal/BookingModal';
 import ProductCard from './ProductCard';
 
 const CategoryPosts = () => {
+    const {user} = useContext(AuthContext)
     const [product, setProduct] = useState(null)
     const products = useLoaderData();
+    const navigate = useNavigate()
+    const handleModal = data => {
+        if(!user){
+            toast.error('please login before booking')
+            navigate('/login')
+        }
+        setProduct(data)
+
+    }
     return (
         <div>
             <div className='container mx-auto my-5'>
@@ -16,7 +28,8 @@ const CategoryPosts = () => {
                     products.map(product => <ProductCard
                         key={product._id}
                         product={product}
-                        setProduct={setProduct}
+                        // setProduct={setProduct}
+                        handleModal={handleModal}
                     >
                     </ProductCard>)
                 }
