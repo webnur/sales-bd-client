@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaGithub } from 'react-icons/fa';
 import { useForm } from "react-hook-form";
 import { AuthContext } from '../../contexts/AuthProvider';
 import toast from 'react-hot-toast';
+import useToken from '../../hooks/useToken';
 
 const Login = () => {
 
@@ -13,14 +14,21 @@ const Login = () => {
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
+    const [loginEmail, setLoginEmail] = useState('')
+    const [token] = useToken(loginEmail);
+    if(token){
+        navigate(from, { replace: true })
+    }
+
+
     const handleLogin = data => {
         console.log(data)
         signIn(data.email, data.password)
             .then(result => {
                 const user = result.user;
                 console.log(user)
+                setLoginEmail(data.email)
                 toast.success('Log in successfully')
-                navigate(from, { replace: true })
             })
             .catch(err => console.error(err))
     }
@@ -30,7 +38,8 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user)
-                navigate(from, { replace: true })
+                setLoginEmail(user.email)
+                // navigate(from, { replace: true })
             })
             .catch(error => console.error(error))
     }

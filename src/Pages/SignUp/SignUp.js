@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { FaGithub, FaUserAlt, } from 'react-icons/fa';
 import { useForm } from "react-hook-form";
 import { HiMail, HiLockClosed } from "react-icons/hi";
@@ -6,13 +6,24 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Signup.css'
 import { AuthContext } from '../../contexts/AuthProvider';
 import toast from 'react-hot-toast';
+import useToken from '../../hooks/useToken';
 
 const SignUp = () => {
+    const [role, setRole] = useState(true)
     const { createUser, updateUser, googleSignIn } = useContext(AuthContext)
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
+
+    const [createdUserEmail, setCreatedUserEmail] = useState('')
+    const [token] = useToken(createdUserEmail);
+
+    if(token) {
+        navigate(from, { replace: true })
+    }
+
+    console.log(role)
 
     const handleSignUp = (data) => {
         // console.log(data)
@@ -37,8 +48,14 @@ const SignUp = () => {
                             photoURL: imageData.data.display_url
                         }
                         updateUser(userInfo)
-                            .then(() => {
-                                saveUser(data.name, data.email)
+                            .then((data) => {
+                                console.log('updated user',data)
+                                const googleUser = {
+                                    name: user.displayName,
+                                    email: user.email,
+                                    role: role ? 'buyer' : 'seller'
+                                }
+                                saveUser(googleUser)
                             })
                             .catch(error => console.error(error))
 
@@ -53,29 +70,51 @@ const SignUp = () => {
         googleSignIn()
             .then(result => {
                 const user = result.user;
-                saveUser(user.displayName,  user.email)
-                navigate(from, { replace: true })
+                const googleUser = {
+                    name: user.displayName,
+                    email: user.email,
+                    role: role ? 'buyer' : 'seller'
+                }
+                saveUser(googleUser)
+                // navigate(from, { replace: true })
             })
             .catch(error => console.error(error))
     }
 
     // save user
-    const saveUser = (name, email) => {
-        const user = { name, email };
+    const saveUser = (dbUser) => {
+
+        // const user = { name, email, role };
+
         fetch('http://localhost:5000/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify(user)
+            body: JSON.stringify(dbUser)
         })
         .then(res => res.json())
         .then(data => {
             if(data.acknowledged){
                 toast.success('user info successfully added in database')
+                // getUserToken(dbUser.email)
+                setCreatedUserEmail(dbUser.email)
+                console.log('inside access token',dbUser.email)
             }
         })
     }
+
+
+    // const getUserToken = email => {
+    //     fetch(`http://localhost:5000/jwt?email=${email}`)
+    //     .then(res => res.json())
+    //     .then(data => {
+    //         if(data.accessToken){
+    //             localStorage.setItem('accessToken', data.accessToken)
+    //             navigate(from, { replace: true })
+    //         }
+    //     })
+    // }
 
     return (
         <section className="signup-bg p-5">
@@ -122,6 +161,9 @@ const SignUp = () => {
                             className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Password" />
                     </div>
                     {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
+
+                    <input type="checkbox" onClick={() => setRole(!role)} className="checkbox bg-white text-green-500 " />
+
 
                     <div className="mt-6">
                         <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
