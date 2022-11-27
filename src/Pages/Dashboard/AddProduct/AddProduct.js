@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../../contexts/AuthProvider';
 
 const AddProduct = () => {
+    const {user} = useContext(AuthContext)
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const handleAddProduct = data => {
@@ -19,10 +21,10 @@ const AddProduct = () => {
         })
             .then(res => res.json())
             .then(imageData => {
-                
+
                 const newProduct = {
                     productName: data.name,
-                    price:data.resalePrice,
+                    price: data.resalePrice,
                     originalPrice: data.price,
                     image: imageData.data.display_url,
                     condition: data.condition,
@@ -30,26 +32,28 @@ const AddProduct = () => {
                     phone: data.number,
                     years_of_use: data.yearsOfUse,
                     category_id: data.categoryId,
-                    description: data.description
+                    description: data.description,
+                    username: user.displayName,
+                    email: user.email
 
                 }
                 console.log(newProduct)
                 // save new product in database
-                fetch('http://localhost:5000/products',{
+                fetch('http://localhost:5000/products', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
                     },
                     body: JSON.stringify(newProduct)
                 })
-                .then(res => res.json())
-                .then(data => {
-                    if(data.acknowledged){
-                        toast.success(`${data.name} Product successfully added`)
-                        navigate('/dashboard/myProducts')
-                    }
-                    
-                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.acknowledged) {
+                            toast.success(`${data.name} Product successfully added`)
+                            navigate('/dashboard/myProducts')
+                        }
+
+                    })
 
             })
 
@@ -91,6 +95,21 @@ const AddProduct = () => {
 
                 </label>
                 {errors.img && <p className='text-red-500'>{errors.img.message}</p>}
+
+                <div className="grid md:grid-cols-2 md:gap-6">
+                    <div className="relative z-0 mb-6 w-full group">
+
+                    <input type="text" name='username' defaultValue={user?.displayName} disabled className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                    />   
+                    </div>
+                    <div className="relative z-0 mb-6 w-full group">
+                        <input type="email" name="Location" defaultValue={user?.email}  disabled className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
+                        />
+
+                    </div>
+                </div>
+
+
                 <div className="grid md:grid-cols-2 md:gap-6">
                     <div className="relative z-0 mb-6 w-full group">
                         <input type="text" name="condition" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
@@ -128,7 +147,7 @@ const AddProduct = () => {
                     <input type="text" name="categoryId" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
                         {...register("categoryId", { required: 'category id is required' })}
                     />
-                    <label htmlFor="floating_company" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Category Id, please type 01 or 02 or 03</label>
+                    <label htmlFor="floating_company" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Category Id, please type 01 or 02 or 03 for select category</label>
                     {errors.categoryId && <p className='text-red-500'>{errors.categoryId.message}</p>}
                 </div>
 
