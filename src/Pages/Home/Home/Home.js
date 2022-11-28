@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Banner from '../Banner/Banner';
 import Category from "../Category/Category"
+import Showrooms from '../Showrooms/Showrooms';
 
 const Home = () => {
     const { data: categories = [], } = useQuery({
@@ -26,6 +27,8 @@ const Home = () => {
                     }
                 </div>
             </section>
+
+            <Showrooms></Showrooms>
 
 
         </div>
