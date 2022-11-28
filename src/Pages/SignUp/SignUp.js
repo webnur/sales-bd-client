@@ -23,8 +23,6 @@ const SignUp = () => {
         navigate(from, { replace: true })
     }
 
-    console.log(role)
-
     const handleSignUp = (data) => {
         // console.log(data)
         const image = data.img[0]
@@ -50,12 +48,12 @@ const SignUp = () => {
                         updateUser(userInfo)
                             .then((data) => {
                                 console.log('updated user',data)
-                                const googleUser = {
+                                const emailUser = {
                                     name: user.displayName,
                                     email: user.email,
                                     role: role ? 'buyer' : 'seller'
                                 }
-                                saveUser(googleUser)
+                                saveUser(emailUser)
                             })
                             .catch(error => console.error(error))
 
@@ -99,7 +97,7 @@ const SignUp = () => {
                 toast.success('user info successfully added in database')
                 // getUserToken(dbUser.email)
                 setCreatedUserEmail(dbUser.email)
-                console.log('inside access token',dbUser.email)
+                // console.log('inside access token',dbUser.email)
             }
         })
     }
