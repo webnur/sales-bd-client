@@ -11,7 +11,7 @@ const BookingModal = ({ product, setProduct }) => {
         const form = event.target;
         const name = form.name.value;
         const email = form.email.value;
-        const price = form.price.value;
+        // const price = form.price.value;
         const number = form.number.value;
         const location = form.location.value;
  
