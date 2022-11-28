@@ -38,24 +38,21 @@ const SignUp = () => {
             .then(imageData => {
                 console.log(imageData)
                 createUser(data.email, data.password)
-                    .then(result => {
+                    .then(async(result)  => {
                         const user = result.user
                         console.log(user)
                         const userInfo = {
                             displayName: data.name,
                             photoURL: imageData.data.display_url
                         }
-                        updateUser(userInfo)
-                            .then((data) => {
-                                console.log('updated user',data)
-                                const emailUser = {
-                                    name: user.displayName,
-                                    email: user.email,
-                                    role: role ? 'buyer' : 'seller'
-                                }
-                                saveUser(emailUser)
-                            })
-                            .catch(error => console.error(error))
+                        await updateUser(userInfo)
+                       
+                        const emailUser = {
+                            name: user.displayName,
+                            email: user.email,
+                            role: role ? 'buyer' : 'seller'
+                        }
+                         saveUser(emailUser)
 
                         toast.success('sign up successfully')
                         navigate(from, { replace: true })
