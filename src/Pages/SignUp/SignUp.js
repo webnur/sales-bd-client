@@ -19,7 +19,7 @@ const SignUp = () => {
     const [createdUserEmail, setCreatedUserEmail] = useState('')
     const [token] = useToken(createdUserEmail);
 
-    if(token) {
+    if (token) {
         navigate(from, { replace: true })
     }
 
@@ -38,7 +38,7 @@ const SignUp = () => {
             .then(imageData => {
                 console.log(imageData)
                 createUser(data.email, data.password)
-                    .then(async(result)  => {
+                    .then(async (result) => {
                         const user = result.user
                         console.log(user)
                         const userInfo = {
@@ -46,13 +46,13 @@ const SignUp = () => {
                             photoURL: imageData.data.display_url
                         }
                         await updateUser(userInfo)
-                       
+
                         const emailUser = {
                             name: user.displayName,
                             email: user.email,
                             role: role ? 'buyer' : 'seller'
                         }
-                         saveUser(emailUser)
+                        saveUser(emailUser)
 
                         toast.success('sign up successfully')
                         navigate(from, { replace: true })
@@ -88,15 +88,15 @@ const SignUp = () => {
             },
             body: JSON.stringify(dbUser)
         })
-        .then(res => res.json())
-        .then(data => {
-            if(data.acknowledged){
-                toast.success('user info successfully added in database')
-                // getUserToken(dbUser.email)
-                setCreatedUserEmail(dbUser.email)
-                // console.log('inside access token',dbUser.email)
-            }
-        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged) {
+                    toast.success('user info successfully added in database')
+                    // getUserToken(dbUser.email)
+                    setCreatedUserEmail(dbUser.email)
+                    // console.log('inside access token',dbUser.email)
+                }
+            })
     }
 
 
@@ -157,7 +157,12 @@ const SignUp = () => {
                     </div>
                     {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
 
-                    <input type="checkbox" onClick={() => setRole(!role)} className="checkbox bg-white text-green-500 " />
+                    <div className='mt-3'>
+                        <span className='text-white'>Are you want to sell in our website?</span><br />
+                        <span className='text-white'>please click the  the box</span>
+
+                        <input type="checkbox" onClick={() => setRole(!role)} className="checkbox bg-white text-green-500  ml-3 p-3" />
+                    </div>
 
 
                     <div className="mt-6">
@@ -166,7 +171,7 @@ const SignUp = () => {
                         </button>
 
                         <div className="mt-6 text-center ">
-                            <Link to='/login' className="text-sm text-blue-500 hover:underline dark:text-blue-400">
+                            <Link to='/login' className="text-sm text-white font-bold hover:underline dark:text-blue-400">
                                 Already have an account?
                             </Link>
                         </div>
@@ -178,7 +183,7 @@ const SignUp = () => {
                     <div className="flex items-center justify-between mt-4">
                         <span className="w-1/5 border-b dark:border-gray-600 lg:w-1/5"></span>
 
-                        <p className="text-xs text-center text-gray-500 uppercase dark:text-gray-400">
+                        <p className="text-xs text-center text-white uppercase dark:text-gray-400">
                             or login with Social Media
                         </p>
 

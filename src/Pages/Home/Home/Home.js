@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import Banner from '../Banner/Banner';
 import Category from "../Category/Category"
 import Showrooms from '../Showrooms/Showrooms';
+import Newsletter from '../NewsLetter/NewsLetter';
 
 const Home = () => {
     const { data: categories = [], } = useQuery({
@@ -29,6 +30,7 @@ const Home = () => {
             </section>
 
             <Showrooms></Showrooms>
+            <Newsletter></Newsletter>
 
 
         </div>
