@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import toast from 'react-hot-toast';
 
 const AllSeller = () => {
 
-    const { data: users = [] } = useQuery({
+    const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
             const res = await fetch(`http://localhost:5000/users/${'seller'}`);
@@ -11,6 +12,23 @@ const AllSeller = () => {
             return data;
         }
     })
+
+
+    const handleDeleteSeller = id => {
+        fetch(`http://localhost:5000/users/${id}`,{
+            method: 'DELETE'
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            if(data.deletedCount> 0){
+                toast.success('delete Seller successfully')
+                refetch()
+            }
+       
+        })
+    }
+    
 
     return (
         <div>
@@ -22,7 +40,7 @@ const AllSeller = () => {
                             <th></th>
                             <th>Name</th>
                             <th>email</th>
-                            <th>Admin</th>
+                            <th>Verify</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
@@ -34,8 +52,8 @@ const AllSeller = () => {
                                     <th>{i + 1}</th>
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
-                                    <td><button className='btn btn-xs btn-primary'>make admin</button></td>
-                                    <td><button className='btn btn-xs btn-warning text-white'>delete</button> </td>
+                                    <td><button className='btn btn-xs btn-primary'>Verify</button></td>
+                                    <td><button className='btn btn-xs btn-warning text-white' onClick={() => handleDeleteSeller(user?._id)}>delete</button> </td>
                                 </tr>)
                         }
 
