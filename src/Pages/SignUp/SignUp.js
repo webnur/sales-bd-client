@@ -9,6 +9,8 @@ import toast from 'react-hot-toast';
 import useToken from '../../hooks/useToken';
 
 const SignUp = () => {
+    
+    const [userEmail, setUserEmail] = useState('')
     const [role, setRole] = useState(true)
     const { createUser, updateUser, googleSignIn } = useContext(AuthContext)
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -16,15 +18,14 @@ const SignUp = () => {
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
-    const [createdUserEmail, setCreatedUserEmail] = useState('')
-    const [token] = useToken(createdUserEmail);
+    const [token] = useToken(userEmail);
+
 
     if (token) {
         navigate(from, { replace: true })
     }
 
     const handleSignUp = (data) => {
-        // console.log(data)
         const image = data.img[0]
         const formData = new FormData();
         formData.append('image', image)
@@ -36,26 +37,24 @@ const SignUp = () => {
         })
             .then(res => res.json())
             .then(imageData => {
-                console.log(imageData)
                 createUser(data.email, data.password)
-                    .then(async (result) => {
-                        const user = result.user
-                        console.log(user)
+                    .then(result => {
+                        const user = result.user;
+                        setUserEmail(data.email);
                         const userInfo = {
                             displayName: data.name,
                             photoURL: imageData.data.display_url
                         }
-                        await updateUser(userInfo)
+                        updateUser(userInfo)
 
                         const emailUser = {
-                            name: user.displayName,
+                            name: data.name,
                             email: user.email,
                             role: role ? 'buyer' : 'seller'
                         }
                         saveUser(emailUser)
 
                         toast.success('sign up successfully')
-                        navigate(from, { replace: true })
                     })
                     .catch(error => console.error(error))
             })
@@ -90,10 +89,12 @@ const SignUp = () => {
         })
             .then(res => res.json())
             .then(data => {
+                // setUserEmail(dbUser.email)
+
                 if (data.acknowledged) {
                     toast.success('user info successfully added in database')
                     // getUserToken(dbUser.email)
-                    setCreatedUserEmail(dbUser.email)
+                    // console.log('token email', dbUser.email)
                     // console.log('inside access token',dbUser.email)
                 }
             })

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import date from 'date-and-time';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +10,9 @@ const AddProduct = () => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const handleAddProduct = data => {
+        const now = new Date();
+        const postedDate = date.format(now, 'YYYY/MM/DD HH:mm:ss');
+        console.log(postedDate)
         const image = data.img[0]
         const formData = new FormData();
         formData.append('image', image)
@@ -34,7 +38,8 @@ const AddProduct = () => {
                     category_id: data.categoryId,
                     description: data.description,
                     username: user.displayName,
-                    email: user.email
+                    email: user.email,
+                    postedDate
 
                 }
                 console.log(newProduct)

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ProductCard = ({ product, handleModal }) => {
-    const { productName, price, originalPrice, image, condition, location, phone, years_of_use } = product
+    const { productName, price, originalPrice, image, condition, location, phone, years_of_use, username } = product
     return (
         <div className="card lg:card-side bg-base-100 shadow-xl mb-8">
             <div className='w-96'>
@@ -15,6 +15,7 @@ const ProductCard = ({ product, handleModal }) => {
                 <p>Condition: {condition}</p>
                 <p>Years of use: {years_of_use}</p>
                 <p>phone: {phone}</p>
+                <p>Seller: {username}</p>
 
                 <div className="card-actions justify-end">
                     <label htmlFor="booking-modal" onClick={() => handleModal(product)} className="btn btn-primary text-white">Book Now</label>

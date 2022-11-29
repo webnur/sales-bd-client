@@ -15,20 +15,35 @@ const AllSeller = () => {
 
 
     const handleDeleteSeller = id => {
-        fetch(`http://localhost:5000/users/${id}`,{
+        fetch(`http://localhost:5000/users/${id}`, {
             method: 'DELETE'
         })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            if(data.deletedCount> 0){
-                toast.success('delete Seller successfully')
-                refetch()
-            }
-       
-        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.deletedCount > 0) {
+                    toast.success('delete Seller successfully')
+                    refetch()
+                }
+
+            })
     }
-    
+
+    const verifySeller = email => {
+        fetch(`http://localhost:5000/sellerverified?email=${email}`, {
+            method: 'PUT',
+        })
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data)
+                if (data.acknowledged) {
+                    toast.success('successfully');
+                }
+
+                refetch()
+              
+            })
+    }
 
     return (
         <div>
@@ -52,7 +67,11 @@ const AllSeller = () => {
                                     <th>{i + 1}</th>
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
-                                    <td><button className='btn btn-xs btn-primary'>Verify</button></td>
+                                    <td>
+                                        {user.status !== 'verified' ?
+                                            <button className='btn btn-xs btn-primary' onClick={() => verifySeller(user.email)}>Verify</button>
+                                            :
+                                            <span className='badge badge-outline'>verified</span>}</td>
                                     <td><button className='btn btn-xs btn-warning text-white' onClick={() => handleDeleteSeller(user?._id)}>delete</button> </td>
                                 </tr>)
                         }
