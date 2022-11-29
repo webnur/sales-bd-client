@@ -11,7 +11,6 @@ const AdvertiseProduct = () => {
         }
     })
 
-    console.log(products)
     return (
         <div className='mt-16 mb-8'>
             <h2 className="text-2xl text-center">Advertise Products</h2>

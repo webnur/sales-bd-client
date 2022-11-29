@@ -70,15 +70,13 @@ const SignUp = () => {
                     role: role ? 'buyer' : 'seller'
                 }
                 saveUser(googleUser)
-                // navigate(from, { replace: true })
+                setUserEmail(user.email)
             })
             .catch(error => console.error(error))
     }
 
     // save user
     const saveUser = (dbUser) => {
-
-        // const user = { name, email, role };
 
         fetch('http://localhost:5000/users', {
             method: 'POST',
@@ -89,13 +87,9 @@ const SignUp = () => {
         })
             .then(res => res.json())
             .then(data => {
-                // setUserEmail(dbUser.email)
 
                 if (data.acknowledged) {
                     toast.success('user info successfully added in database')
-                    // getUserToken(dbUser.email)
-                    // console.log('token email', dbUser.email)
-                    // console.log('inside access token',dbUser.email)
                 }
             })
     }
