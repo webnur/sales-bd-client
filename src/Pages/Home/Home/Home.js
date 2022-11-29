@@ -4,6 +4,7 @@ import Banner from '../Banner/Banner';
 import Category from "../Category/Category"
 import Showrooms from '../Showrooms/Showrooms';
 import Newsletter from '../NewsLetter/NewsLetter';
+import AdvertiseProduct from '../AdvertiseProduct/AdvertiseProduct';
 
 const Home = () => {
     const { data: categories = [], } = useQuery({
@@ -29,6 +30,7 @@ const Home = () => {
                 </div>
             </section>
 
+            <AdvertiseProduct></AdvertiseProduct>
             <Showrooms></Showrooms>
             <Newsletter></Newsletter>
 
