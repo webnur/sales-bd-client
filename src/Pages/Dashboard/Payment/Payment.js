@@ -1,7 +1,7 @@
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import React from 'react';
-import { useNavigation } from 'react-day-picker';
+import { useNavigation } from 'react-router-dom';
 import { useLoaderData } from 'react-router-dom';
 import Loading from '../../../components/Loading/Loading';
 import CheckOutForm from './CheckOutForm';

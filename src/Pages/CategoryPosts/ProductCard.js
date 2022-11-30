@@ -1,13 +1,52 @@
-import React from 'react';
+import React, { useContext} from 'react';
+import toast from 'react-hot-toast';
+import { HiHeart } from "react-icons/hi";
+import { AuthContext } from '../../contexts/AuthProvider';
+
 
 const ProductCard = ({ product, handleModal }) => {
-    const { productName, price, originalPrice, image, condition, location, phone, years_of_use, username, status } = product
+
+    const {user} = useContext(AuthContext)
+    const { productName, price, originalPrice, image, condition, location, phone, years_of_use, username, status, _id} = product
+
+    const handleWishList = product => {
+        // console.log(product)
+        const wishList = {
+            productName: product.productName,
+            image: product.image,
+            price: product.price,
+            phone: product.phone,
+            email: user?.email,
+            productId: _id
+        }
+        console.log(wishList)
+        fetch("http://localhost:5000/wishlist", {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(wishList)
+        })
+        .then(res => res.json())
+        .then(data => {
+            // console.log(data)
+            if(data.acknowledged === true) {
+                toast.success('add to wishlist successfully')
+            }
+        })
+
+
+    }
+   
+
+
     return (
         <div className="card lg:card-side bg-base-100 shadow-xl mb-8">
             <div className='w-96'>
                 <figure><img src={image} className='h-[300px]' alt="Album" /></figure>
             </div>
             <div className="card-body">
+                <button onClick={() => handleWishList(product)}><HiHeart className='text-3xl text-rose-400'></HiHeart></button>
                 <h2 className="card-title font-bold">{productName}</h2>
                 <p className='font-bold'>Resale price: {price} BDT</p>
                 <p className='font-bold'>Original Price: <span className='line-through text-red-400'>{originalPrice}BDT</span></p>
@@ -19,9 +58,9 @@ const ProductCard = ({ product, handleModal }) => {
 
                 {
                     status ? <div className='flex items-center'>
-                                <div className='w-5 h-5 bg-green-500 rounded-full'></div>
-                                <p className='ml-3 text-green-500 font-bold'>:Verified</p>
-                            </div>
+                        <div className='w-5 h-5 bg-green-500 rounded-full'></div>
+                        <p className='ml-3 text-green-500 font-bold'>:Verified</p>
+                    </div>
                         :
                         <span className='text-rose-500 font-bold'>seller unverified</span>
                 }

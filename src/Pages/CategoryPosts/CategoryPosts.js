@@ -18,6 +18,11 @@ const CategoryPosts = () => {
         setProduct(data)
 
     }
+
+   
+
+
+
     return (
         <div>
             <div className='container mx-auto my-5'>
