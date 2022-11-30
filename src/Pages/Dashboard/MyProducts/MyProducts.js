@@ -9,7 +9,7 @@ const MyProducts = () => {
     const { data: products = [], refetch } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/products?email=${user?.email}`);
+            const res = await fetch(`https://assignment-12-server-chi-coral.vercel.app/products?email=${user?.email}`);
             const data = res.json();
             return data;
         }
@@ -17,22 +17,23 @@ const MyProducts = () => {
 
 
     const handleDeleteProduct = id => {
-        fetch(`http://localhost:5000/product/${id}`, {
+        fetch(`https://assignment-12-server-chi-coral.vercel.app/product/${id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())
             .then(data => {
-                if (data.deletedCount > 0) {
-                    toast.success('delete product successfully');
-                    console.log(data)
-                    refetch()
-                }
+                refetch()
+                toast.success('delete product successfully');
+                // if (data.deletedCount > 0) {
+                   
+                //     console.log(data)       
+                // }
 
             })
     }
 
     const handleAdvertise = id => {
-        fetch(`http://localhost:5000/advertise/${id}`, {
+        fetch(`https://assignment-12-server-chi-coral.vercel.app/advertise/${id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -42,6 +43,7 @@ const MyProducts = () => {
             .then(data => {
                 console.log(data)
                 refetch()
+                toast.success('Advertise Successfully added')
             })
 
     }

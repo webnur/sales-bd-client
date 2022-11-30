@@ -5,7 +5,7 @@ const AdvertiseProduct = () => {
     const { data: products = [] } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/advertise/${'advertise'}`);
+            const res = await fetch(`https://assignment-12-server-chi-coral.vercel.app/advertise/${'advertise'}`);
             const data = await res.json();
             return data;
         }

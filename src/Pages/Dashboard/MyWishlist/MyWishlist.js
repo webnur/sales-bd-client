@@ -8,7 +8,7 @@ const MyWishlist = () => {
     const { data: wishlists = [], refetch } = useQuery({
         queryKey: ['wishlists'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/wishlist/${user?.email}`);
+            const res = await fetch(`https://assignment-12-server-chi-coral.vercel.app/wishlist/${user?.email}`);
             const data = await res.json();
             return data;
         }
@@ -16,13 +16,16 @@ const MyWishlist = () => {
 
 
     const deleteWishlist = id => {
-        fetch(`http://localhost:5000/wishlist/${id}`, {
+        fetch(`https://assignment-12-server-chi-coral.vercel.app/wishlist/${id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())
             .then(data => {
-                toast.success('wishlist successfully delete')
-                refetch()
+                if (data.deletedCount > 0) {
+                    toast.success('wishlist successfully delete')
+                    refetch()
+                }
+
             })
 
     }

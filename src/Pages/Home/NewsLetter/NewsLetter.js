@@ -10,7 +10,7 @@ const Newsletter = () => {
             email: email
         }
 
-        fetch('http://localhost:5000/subscriber', {
+        fetch('https://assignment-12-server-chi-coral.vercel.app/subscriber', {
             method: "POST",
             headers: {
                 "content-type": "application/json"

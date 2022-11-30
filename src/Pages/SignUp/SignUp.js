@@ -40,7 +40,7 @@ const SignUp = () => {
                 createUser(data.email, data.password)
                     .then(result => {
                         const user = result.user;
-                        setUserEmail(data.email);
+                        // setUserEmail(data.email);
                         const userInfo = {
                             displayName: data.name,
                             photoURL: imageData.data.display_url
@@ -70,7 +70,7 @@ const SignUp = () => {
                     role: role ? 'buyer' : 'seller'
                 }
                 saveUser(googleUser)
-                setUserEmail(user.email)
+                // setUserEmail(user.email)
             })
             .catch(error => console.error(error))
     }
@@ -78,7 +78,7 @@ const SignUp = () => {
     // save user
     const saveUser = (dbUser) => {
 
-        fetch('http://localhost:5000/users', {
+        fetch('https://assignment-12-server-chi-coral.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -87,7 +87,7 @@ const SignUp = () => {
         })
             .then(res => res.json())
             .then(data => {
-
+                setUserEmail(dbUser.email)
                 if (data.acknowledged) {
                     toast.success('user info successfully added in database')
                 }

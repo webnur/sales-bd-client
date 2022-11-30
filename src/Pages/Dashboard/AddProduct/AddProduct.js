@@ -44,7 +44,7 @@ const AddProduct = () => {
                 }
                 console.log(newProduct)
                 // save new product in database
-                fetch('http://localhost:5000/products', {
+                fetch('https://assignment-12-server-chi-coral.vercel.app/products', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'

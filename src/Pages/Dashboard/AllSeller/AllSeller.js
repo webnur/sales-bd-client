@@ -7,7 +7,7 @@ const AllSeller = () => {
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/users/${'seller'}`);
+            const res = await fetch(`https://assignment-12-server-chi-coral.vercel.app/users/${'seller'}`);
             const data = res.json();
             return data;
         }
@@ -15,7 +15,7 @@ const AllSeller = () => {
 
 
     const handleDeleteSeller = id => {
-        fetch(`http://localhost:5000/users/${id}`, {
+        fetch(`https://assignment-12-server-chi-coral.vercel.app/users/${id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())
@@ -30,7 +30,7 @@ const AllSeller = () => {
     }
 
     const verifySeller = email => {
-        fetch(`http://localhost:5000/sellerverified?email=${email}`, {
+        fetch(`https://assignment-12-server-chi-coral.vercel.app/sellerverified?email=${email}`, {
             method: 'PUT',
         })
             .then(res => res.json())

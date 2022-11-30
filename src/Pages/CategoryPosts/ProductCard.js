@@ -7,7 +7,7 @@ import { AuthContext } from '../../contexts/AuthProvider';
 const ProductCard = ({ product, handleModal }) => {
 
     const {user} = useContext(AuthContext)
-    const { productName, price, originalPrice, image, condition, location, phone, years_of_use, username, status, _id} = product
+    const { productName, price, originalPrice, image, condition, location, phone, years_of_use, username, status, _id, postedDate} = product
 
     const handleWishList = product => {
         // console.log(product)
@@ -20,7 +20,7 @@ const ProductCard = ({ product, handleModal }) => {
             productId: _id
         }
         console.log(wishList)
-        fetch("http://localhost:5000/wishlist", {
+        fetch("https://assignment-12-server-chi-coral.vercel.app/wishlist", {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -48,13 +48,14 @@ const ProductCard = ({ product, handleModal }) => {
             <div className="card-body">
                 <button onClick={() => handleWishList(product)}><HiHeart className='text-3xl text-rose-400'></HiHeart></button>
                 <h2 className="card-title font-bold">{productName}</h2>
-                <p className='font-bold'>Resale price: {price} BDT</p>
-                <p className='font-bold'>Original Price: <span className='line-through text-red-400'>{originalPrice}BDT</span></p>
+                <p className='font-bold'>Resale price: ${price}</p>
+                <p className='font-bold'>Original Price: <span className='line-through text-red-400'>${originalPrice}</span></p>
                 <p className='font-bold'>Location: {location}</p>
                 <p className='font-bold'>Condition: {condition}</p>
                 <p className='font-bold'>Years of use: {years_of_use}</p>
                 <p className='font-bold'>phone: {phone}</p>
                 <p className='font-bold'>Seller name: {username}</p>
+                <p className='font-bold'>posted Date: {postedDate}</p>
 
                 {
                     status ? <div className='flex items-center'>
