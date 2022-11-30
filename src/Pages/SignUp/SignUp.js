@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { FaGithub, FaUserAlt, } from 'react-icons/fa';
+import { FaUserAlt, } from 'react-icons/fa';
 import { useForm } from "react-hook-form";
 import { HiMail, HiLockClosed } from "react-icons/hi";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -95,17 +95,6 @@ const SignUp = () => {
     }
 
 
-    // const getUserToken = email => {
-    //     fetch(`http://localhost:5000/jwt?email=${email}`)
-    //     .then(res => res.json())
-    //     .then(data => {
-    //         if(data.accessToken){
-    //             localStorage.setItem('accessToken', data.accessToken)
-    //             navigate(from, { replace: true })
-    //         }
-    //     })
-    // }
-
     return (
         <section className="signup-bg p-5">
             <div className="sm:w-full max-w-sm p-6 m-auto mx-auto form-bg rounded-md shadow-md dark:bg-gray-800">
@@ -193,10 +182,6 @@ const SignUp = () => {
                             </svg>
 
                             <span className="hidden mx-2 sm:inline">Sign in with Google</span>
-                        </button>
-
-                        <button className="p-2 mx-2 text-sm font-medium text-gray-500 transition-colors duration-300 transform bg-gray-300 rounded-md hover:bg-gray-200">
-                            <FaGithub></FaGithub>
                         </button>
                     </div>
 

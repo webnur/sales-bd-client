@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FaGithub } from 'react-icons/fa';
 import { useForm } from "react-hook-form";
 import { AuthContext } from '../../contexts/AuthProvider';
 import toast from 'react-hot-toast';
@@ -95,10 +94,6 @@ const Login = () => {
                         </svg>
 
                         <span className="hidden mx-2 sm:inline">Sign in with Google</span>
-                    </button>
-
-                    <button className="p-2 mx-2 text-sm font-medium text-gray-500 transition-colors duration-300 transform bg-gray-300 rounded-md hover:bg-gray-200">
-                        <FaGithub></FaGithub>
                     </button>
                 </div>
 
