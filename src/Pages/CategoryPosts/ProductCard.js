@@ -43,7 +43,7 @@ const ProductCard = ({ product, handleModal }) => {
     return (
         <div className="card lg:card-side bg-base-100 shadow-xl mb-8">
             <div className='w-96'>
-                <figure><img src={image} className='h-[300px]' alt="Album" /></figure>
+                <figure><img src={image} className='h-[350px] mx-auto rounded-md pt-16 pl-6' alt="Album" /></figure>
             </div>
             <div className="card-body">
                 <button onClick={() => handleWishList(product)}><HiHeart className='text-3xl text-rose-400'></HiHeart></button>
