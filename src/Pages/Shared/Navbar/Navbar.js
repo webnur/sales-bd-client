@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { FaBars, FaTimesCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
+import { FaUser } from "react-icons/fa";
 
 const Navbar = () => {
 
@@ -81,7 +82,8 @@ const Navbar = () => {
                                     {
                                         user?.photoURL ? <img src={user?.photoURL} className="object-cover w-full h-full" alt="avatar" />
                                             :
-                                            <img src={"https://i.pinimg.com/originals/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.png"} className="object-cover w-full h-full" alt="avatar" />
+                                            <FaUser className='text-2xl text-center mx-auto pt-2' />
+                                            // <img src={"https://i.pinimg.com/originals/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.png"} className="object-cover w-full h-full" alt="avatar" />
                                     }
                                 </div>
                             </button>
